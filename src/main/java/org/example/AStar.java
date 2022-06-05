@@ -5,7 +5,7 @@ import java.util.PriorityQueue;
 
 public class AStar {
 
-    private final int path;
+    private int path;
 
     public AStar(ArrayList<Node>[] graph) {
         this.path = findPath(graph);
