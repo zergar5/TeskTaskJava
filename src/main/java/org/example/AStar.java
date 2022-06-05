@@ -5,7 +5,7 @@ import java.util.PriorityQueue;
 
 public class AStar {
 
-    private int path;
+    private final int path;
 
     public AStar(ArrayList<Node>[] graph) {
         this.path = findPath(graph);
@@ -18,15 +18,12 @@ public class AStar {
         int goal = 15;
 
         ArrayList<Integer> moveCost = new ArrayList<>();
-        ArrayList<Integer> cameFrom = new ArrayList<>();
         ArrayList<Boolean> visited = new ArrayList<>();
 
         moveCost.add(start, 0);
-        cameFrom.add(start, null);
         visited.add(start, false);
         for (int i = 1; i < 16; i++) {
             moveCost.add(i, Integer.MAX_VALUE);
-            cameFrom.add(i, null);
             visited.add(i, false);
         }
 
@@ -48,12 +45,10 @@ public class AStar {
                 int neighborNode = neighbor.node;
                 int newCost = moveCost.get(currentNode) + neighborCost;
 
-                if (!visited.get(neighborNode) && (!moveCost.contains(neighborNode) ||
-                        newCost < moveCost.get(neighborNode))) {
+                if (!visited.get(neighborNode) && newCost < moveCost.get(neighborNode)) {
                     int priority = newCost + heurictic(neighborNode, goal);
                     priorityQueue.add(new Node(priority, neighborNode));
                     moveCost.set(neighborNode, newCost);
-                    cameFrom.set(neighborNode, currentNode);
 
                 }
             }
